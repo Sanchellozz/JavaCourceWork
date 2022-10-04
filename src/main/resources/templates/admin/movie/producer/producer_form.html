@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: head"> </head>
+  <body>
+    <div class="container">
+      <nav th:replace="layouts :: admin_navbar"></nav>
+      <div class="container">
+        <h1 align="center">Добавить режиссера</h1>
+        <form th:object="${producer}" th:action="@{/admin/producers/create}" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="name" class="form-label">Enter Name</label>
+            <input type="text" th:field="*{name}" name="name" class="form-control" placeholder="Name" aria-label="Name"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="imageUrl" class="form-label"
+              >Изображение</label
+            >
+            <img
+              height="30px"
+              width="30px"
+              th:if="${producer.getImageUrl()}"
+              th:src="@{${producer.getImageUrl()}}"
+            />
+            <br/>
+            <input type="file" name="file" />
+          </div>
+          <button
+            class="btn btn-primary text-center"
+            type="submit"
+            th:text="(${producer.id}?'Update':'Create')"
+          ></button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
